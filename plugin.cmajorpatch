@@ -1,0 +1,18 @@
+
+{
+    "CmajorVersion":    1,
+    "ID":               "dev.your_namejohe.testplugin",
+    "version":          "1.0",
+    "name":             "testplugin",
+    "description":      "plugin",
+    "category":         "generator",
+    "manufacturer":     "johe-corp",
+    "isInstrument":     true,
+
+    "source":           "plugin.cmajor",
+
+    "view":             { "src": "view/index.js",
+                          "width": 500,
+                          "height": 300,
+                          "resizable": true }
+}
