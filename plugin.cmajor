@@ -2,12 +2,30 @@ processor plugin  [[ main ]]
 {
     output stream float out;
     input value float frequency [[ name: "Frequency", min: 5.0f, max: 1000.0f, init: 440.0f ]];
+    input value string waveform [[ name: "Waveform", init: "sine" ]];
 
     void main()
     {
         loop
         {
-            out <- volume * sin (phase);
+            if (waveform == "square")
+            {
+                if (phase < pi)
+                    out <- volume;
+                else
+                    out <- -volume;
+            }
+            else if (waveform == "triangle")
+            {
+                if (phase < pi)
+                    out <- volume * float(phase / pi);
+                else
+                    out <- volume * float(2.0 - phase / pi);
+            }
+            else // Default to sine wave
+            {
+                out <- volume * sin (phase);
+            }
 
             let phaseDelta = float (frequency * processor.period * twoPi);
             phase = addModulo2Pi (phase, phaseDelta);
