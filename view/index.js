@@ -40,12 +40,22 @@ class plugin_View extends HTMLElement
             newFrequency = 698.46;
         } else if (event.key === 'm') { // G
             newFrequency = 783.99;
+        } else if (event.key === 'q') {
+            //event.preventDefault(); // Prevent the default behavior of Tab
+            this.changeWaveform();
         } else {
             return; // If the key is not mapped, do nothing
         }
         this.patchConnection.sendEventOrValue('frequency', newFrequency);
     }
 
+    changeWaveform() {
+        const waveforms = ['since', 'square', 'triangle'];
+        const currentWaveform = this.patchConnection.getParameterValue('waveform');
+        const currentIndex = waveforms.indexOf(currentWaveform);
+        const nextIndex = (currentIndex + 1) % waveforms.length;
+        this.patchConnection.sendEventOrValue('waveform', waveforms[nextIndex]);
+    }
     
     connectedCallback()
     {
@@ -84,7 +94,7 @@ class plugin_View extends HTMLElement
         
         squareButton.onclick = () =>{
             this.patchConnection.sendEventOrValue ('waveform', 'square');
-        }
+        };
 
          
 
